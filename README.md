@@ -52,7 +52,14 @@ ClientError: An error occurred (UnauthorizedOperation) when calling the Terminat
 ```
 The reasons for this is the IAM role restrictions / conditionals are not allowing the API call defined in this error, e.g. TerminateInstances in this example. 
 
+### Test Cases
+Test for auto-scaling EBS is to monitor the EC2 console and run the following in the workspace:
+* Launch a 1-worker r3.xlarge cluster 
+* Run: `%scala spark.range(500e9.toLong).repartition(1000).collect()`
+  * This should eat up the local disk w/ spilled data and cause EBS volumes to increase. 
 
+Test auto-scaling for EC2 instances.  
+Test EC2 instance pools and tagging procedures.  
 
 **Resources:**
 * [AWS Docs for Supported Conditions](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html)
